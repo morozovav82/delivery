@@ -1,0 +1,33 @@
+replicaCount: 2
+
+image: morozovav82/delivery:1.0
+
+service:
+  type: NodePort
+  port: 9000
+
+appBasePath: '/delivery'
+
+postgresql:
+  fullname: users-postgresql
+  postgresqlDatabase: users
+  postgresqlUsername: users
+  postgresqlPassword: qwerty123
+  service:
+    port: "5432"
+
+mq:
+  url: mq-artemis
+  port: 61616
+  user: artemis
+  password: password
+
+ingress:
+  enabled: true
+  hosts:
+    - host: arch.homework
+      paths: ["/delivery"]
+      
+metrics:
+  serviceMonitor:
+    enabled: false
