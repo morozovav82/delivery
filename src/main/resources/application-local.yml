@@ -1,5 +1,7 @@
 server:
   port: 8086
+  servlet:
+    context-path: '/delivery'
 
 spring:
     datasource:
@@ -14,4 +16,4 @@ spring:
       password: password
       mode: native
 
-app:basePath: /
+app.basePath: /delivery

@@ -9,15 +9,15 @@ import ru.morozov.delivery.dto.DeliveryDto;
 import ru.morozov.delivery.exceptions.NotFoundException;
 import ru.morozov.delivery.service.DeliveryService;
 
-@RestController()
-@RequestMapping("/delivery")
+@RestController
+@RequestMapping
 @RequiredArgsConstructor
 @Slf4j
 public class DeliveryController {
 
     private final DeliveryService deliveryService;
 
-    @GetMapping("/{orderId}")
+    @GetMapping("/{orderId:\\d+}")
     public ResponseEntity<DeliveryDto> info(@PathVariable("orderId") Long orderId) {
         try {
             return new ResponseEntity(
