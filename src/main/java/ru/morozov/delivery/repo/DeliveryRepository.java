@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
+    Optional<Delivery> findOneByOrderId(Long orderId);
     Optional<Delivery> findOneByOrderIdAndStatus(Long orderId, String status);
     List<Delivery> findByStatus(String status);
 }

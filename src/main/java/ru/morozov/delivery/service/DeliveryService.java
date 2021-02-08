@@ -28,7 +28,7 @@ public class DeliveryService {
     private final DeliveryProducer deliveryProducer;
 
     public DeliveryDto findByOrderId(Long orderId) {
-        Optional<Delivery> res = deliveryRepository.findOneByOrderIdAndStatus(orderId, Status.ACTIVE.name());
+        Optional<Delivery> res = deliveryRepository.findOneByOrderId(orderId);
         if (res.isPresent()) {
             Delivery delivery = res.get();
             return DeliveryMapper.convertDeliveryToDeliveryDto(delivery);
@@ -65,9 +65,23 @@ public class DeliveryService {
         Assert.notNull(orderId, "OrderId is null");
 
         Optional<Delivery> res = deliveryRepository.findOneByOrderIdAndStatus(orderId, Status.ACTIVE.name());
-        if (!res.isPresent()) {
+        if (res.isPresent()) {
             Delivery delivery = res.get();
             delivery.setStatus(Status.CANCELED.name());
+
+            deliveryRepository.save(delivery);
+        } else {
+            throw new NotFoundException(orderId);
+        }
+    }
+
+    public void done(Long orderId) {
+        Assert.notNull(orderId, "OrderId is null");
+
+        Optional<Delivery> res = deliveryRepository.findOneByOrderIdAndStatus(orderId, Status.ACTIVE.name());
+        if (res.isPresent()) {
+            Delivery delivery = res.get();
+            delivery.setStatus(Status.DONE.name());
 
             deliveryRepository.save(delivery);
         } else {
