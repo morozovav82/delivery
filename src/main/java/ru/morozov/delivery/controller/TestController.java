@@ -10,7 +10,7 @@ import ru.morozov.messages.SagaScheduleDeliveryMsg;
 import ru.morozov.messages.SagaScheduleDeliveryRollbackMsg;
 
 @RestController
-@RequestMapping("/delivery/tests")
+@RequestMapping("/tests")
 @RequiredArgsConstructor
 @Slf4j
 public class TestController {
