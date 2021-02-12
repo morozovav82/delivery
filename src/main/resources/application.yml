@@ -20,7 +20,8 @@ active-mq:
   SagaScheduleDeliveryRollback-topic: SagaScheduleDeliveryRollback
   DeliveryScheduled-topic: DeliveryScheduled
   DeliveryRejected-topic: DeliveryRejected
-  OrderDone-topic: OrderDone
+  DeliveryDone-topic: DeliveryDone
+  OrderDone-exchange: OrderDoneExchange
 
 #настройка actuator
 management:

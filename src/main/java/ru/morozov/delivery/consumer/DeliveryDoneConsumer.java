@@ -11,8 +11,8 @@ import ru.morozov.messages.OrderDoneMsg;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@RabbitListener(queues = "${active-mq.OrderDone-topic}")
-public class OrderDoneConsumer {
+@RabbitListener(queues = "${active-mq.DeliveryDone-topic}")
+public class DeliveryDoneConsumer {
 
     private final DeliveryService deliveryService;
 

@@ -28,8 +28,8 @@ public class TestController {
     @Value("${active-mq.SagaScheduleDeliveryRollback-topic}")
     private String sagaScheduleDeliveryRollbackTopic;
 
-    @Value("${active-mq.OrderDone-topic}")
-    private String orderDoneTopic;
+    @Value("${active-mq.DeliveryDone-topic}")
+    private String deliveryDoneTopic;
 
     private void sendMessage(String topic, Object message){
         try{
@@ -51,8 +51,8 @@ public class TestController {
         sendMessage(sagaScheduleDeliveryRollbackTopic, message);
     }
 
-    @PostMapping("/sendOrderDoneMsg")
-    public void sendOrderDoneMsg(@RequestBody OrderDoneMsg message) {
-        sendMessage(orderDoneTopic, message);
+    @PostMapping("/sendDeliveryDoneMsg")
+    public void sendDeliveryDoneMsg(@RequestBody OrderDoneMsg message) {
+        sendMessage(deliveryDoneTopic, message);
     }
 }
