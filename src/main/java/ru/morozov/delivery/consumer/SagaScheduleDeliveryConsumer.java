@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import ru.morozov.delivery.repo.RedisRepository;
 import ru.morozov.delivery.service.DeliveryService;
 import ru.morozov.messages.SagaScheduleDeliveryMsg;
 
@@ -15,10 +16,24 @@ import ru.morozov.messages.SagaScheduleDeliveryMsg;
 public class SagaScheduleDeliveryConsumer {
 
     private final DeliveryService deliveryService;
+    private final RedisRepository redisRepository;
 
     @RabbitHandler
     public void receive(SagaScheduleDeliveryMsg msg) {
         log.info("Received Message: {}", msg.toString());
+
+        String idempotenceKey = msg.getOrderId().toString();
+        log.info("idempotenceKey={}", idempotenceKey);
+
+        //idempotence check
+        Object value = redisRepository.find(idempotenceKey);
+        if (value != null) {
+            log.info("Order has already been processed. IdempotenceKey=" + idempotenceKey);
+            return;
+        } else {
+            redisRepository.add(idempotenceKey, idempotenceKey);
+        }
+
         try {
             deliveryService.schedule(msg.getOrderId(), msg.getDeliveryInfo());
         } catch (Exception e) {
