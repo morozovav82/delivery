@@ -22,7 +22,7 @@ public class SagaScheduleDeliveryConsumer {
     public void receive(SagaScheduleDeliveryMsg msg) {
         log.info("Received Message: {}", msg.toString());
 
-        String idempotenceKey = msg.getOrderId().toString();
+        String idempotenceKey = "SagaScheduleDelivery_" + msg.getOrderId().toString();
         log.info("idempotenceKey={}", idempotenceKey);
 
         //idempotence check
