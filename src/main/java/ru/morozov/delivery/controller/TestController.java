@@ -2,13 +2,13 @@ package ru.morozov.delivery.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.morozov.delivery.service.MessageService;
 import ru.morozov.messages.OrderDoneMsg;
 import ru.morozov.messages.SagaScheduleDeliveryMsg;
 import ru.morozov.messages.SagaScheduleDeliveryRollbackMsg;
@@ -20,7 +20,7 @@ import ru.morozov.messages.SagaScheduleDeliveryRollbackMsg;
 public class TestController {
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private MessageService messageService;
 
     @Value("${active-mq.SagaScheduleDelivery-topic}")
     private String sagaScheduleDeliveryTopic;
@@ -31,28 +31,18 @@ public class TestController {
     @Value("${active-mq.DeliveryDone-topic}")
     private String deliveryDoneTopic;
 
-    private void sendMessage(String topic, Object message){
-        try{
-            log.info("Attempting send message to Topic: "+ topic);
-            rabbitTemplate.convertAndSend(topic, message);
-            log.info("Message sent: {}", message);
-        } catch(Exception e){
-            log.error("Failed to send message", e);
-        }
-    }
-
     @PostMapping("/sendSagaScheduleDeliveryMsg")
     public void sendSagaScheduleDeliveryMsg(@RequestBody SagaScheduleDeliveryMsg message) {
-        sendMessage(sagaScheduleDeliveryTopic, message);
+        messageService.scheduleSentMessage(sagaScheduleDeliveryTopic, null, message, SagaScheduleDeliveryMsg.class);
     }
 
     @PostMapping("/sendSagaScheduleDeliveryRollbackMsg")
     public void sendSagaScheduleDeliveryRollbackMsg(@RequestBody SagaScheduleDeliveryRollbackMsg message) {
-        sendMessage(sagaScheduleDeliveryRollbackTopic, message);
+        messageService.scheduleSentMessage(sagaScheduleDeliveryRollbackTopic, null, message, SagaScheduleDeliveryRollbackMsg.class);
     }
 
     @PostMapping("/sendDeliveryDoneMsg")
     public void sendDeliveryDoneMsg(@RequestBody OrderDoneMsg message) {
-        sendMessage(deliveryDoneTopic, message);
+        messageService.scheduleSentMessage(deliveryDoneTopic, null, message, OrderDoneMsg.class);
     }
 }
