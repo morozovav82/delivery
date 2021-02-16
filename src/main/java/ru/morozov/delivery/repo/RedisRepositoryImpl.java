@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class RedisRepositoryImpl implements RedisRepository {
 
-    private static final String KEY = "DELIVERY_IDEMPOTENCE";
+    private static final String KEY = "DELIVERY";
     private final RedisTemplate<String, Object> redisTemplate;
     private HashOperations hashOperations;
 
