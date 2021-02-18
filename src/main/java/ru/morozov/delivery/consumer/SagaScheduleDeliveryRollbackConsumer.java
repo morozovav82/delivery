@@ -11,7 +11,7 @@ import ru.morozov.messages.SagaScheduleDeliveryRollbackMsg;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@RabbitListener(queues = "${active-mq.SagaScheduleDeliveryRollback-topic}")
+@RabbitListener(queues = "${mq.SagaScheduleDeliveryRollback-topic}")
 public class SagaScheduleDeliveryRollbackConsumer {
 
     private final DeliveryService deliveryService;

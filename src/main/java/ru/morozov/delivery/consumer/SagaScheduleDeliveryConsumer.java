@@ -12,7 +12,7 @@ import ru.morozov.messages.SagaScheduleDeliveryMsg;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-@RabbitListener(queues = "${active-mq.SagaScheduleDelivery-topic}")
+@RabbitListener(queues = "${mq.SagaScheduleDelivery-topic}")
 public class SagaScheduleDeliveryConsumer {
 
     private final DeliveryService deliveryService;

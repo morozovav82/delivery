@@ -12,22 +12,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MqConfig {
 
-    @Value("${active-mq.SagaScheduleDelivery-topic}")
+    @Value("${mq.SagaScheduleDelivery-topic}")
     private String sagaScheduleDeliveryTopic;
 
-    @Value("${active-mq.SagaScheduleDeliveryRollback-topic}")
+    @Value("${mq.SagaScheduleDeliveryRollback-topic}")
     private String sagaScheduleDeliveryRollbackTopic;
 
-    @Value("${active-mq.OrderDone-exchange}")
+    @Value("${mq.OrderDone-exchange}")
     private String orderDoneExchange;
 
-    @Value("${active-mq.DeliveryDone-topic}")
+    @Value("${mq.DeliveryDone-topic}")
     private String deliveryDoneTopic;
 
-    @Value("${active-mq.DeliveryScheduled-topic}")
+    @Value("${mq.DeliveryScheduled-topic}")
     private String deliveryScheduledTopic;
 
-    @Value("${active-mq.DeliveryRejected-topic}")
+    @Value("${mq.DeliveryRejected-topic}")
     private String deliveryRejectedTopic;
 
     @Bean

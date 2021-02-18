@@ -17,10 +17,10 @@ public class DeliveryProducer {
     @Autowired
     private MessageService messageService;
 
-    @Value("${active-mq.DeliveryScheduled-topic}")
+    @Value("${mq.DeliveryScheduled-topic}")
     private String deliveryScheduledTopic;
 
-    @Value("${active-mq.DeliveryRejected-topic}")
+    @Value("${mq.DeliveryRejected-topic}")
     private String deliveryRejectedTopic;
 
     public void sendDeliveryScheduledMessage(DeliveryScheduledMsg message){
